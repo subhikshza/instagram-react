@@ -1,0 +1,201 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #fafafa;
+}
+
+/* Header */
+
+.header {
+  height: 60px;
+  background: white;
+  border-bottom: 1px solid #dbdbdb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+.search-box {
+  padding: 8px 12px;
+  border: none;
+  background: #efefef;
+  border-radius: 8px;
+}
+
+/* Sidebar */
+
+.navbar {
+  width: 240px;
+  height: 100vh;
+  background: white;
+  border-right: 1px solid #dbdbdb;
+  position: fixed;
+  top: 60px;
+  left: 0;
+  padding: 20px;
+}
+
+.logo {
+  margin-bottom: 30px;
+}
+
+.navbar p {
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.navbar p:hover {
+  font-weight: bold;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+}
+
+/* Layout */
+
+.app-layout {
+  display: flex;
+}
+
+.main-content {
+  margin-left: 260px;
+  margin-top: 80px;
+  padding: 20px;
+  flex: 1;
+}
+
+/* Stories */
+
+.stories {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.story {
+  width: 80px;
+  height: 80px;
+  border: 3px solid #ff0066;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Posts */
+
+.post {
+  width: 500px;
+  background: white;
+  border: 1px solid #dbdbdb;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.post-image {
+  width: 100%;
+  height: 350px;
+  background: #ddd;
+  margin: 10px 0;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  background: #ff0066;
+  border-radius: 50%;
+}
+
+.post-actions {
+  font-size: 22px;
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+/* Right Sidebar */
+
+.right-sidebar {
+  width: 280px;
+  padding: 20px;
+  margin-top: 80px;
+}
+
+.right-sidebar h4 {
+  margin-bottom: 15px;
+}
+
+.right-sidebar p {
+  padding: 8px 0;
+}
+
+/* Mobile Navigation */
+
+.mobile-nav {
+  display: none;
+}
+
+.mobile-nav a {
+  text-decoration: none;
+  color: black;
+  font-size: 22px;
+}
+
+/* Responsive */
+
+@media (max-width: 1000px) {
+  .right-sidebar {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    padding-bottom: 80px;
+  }
+
+  .stories {
+    overflow-x: auto;
+  }
+
+  .post {
+    width: 100%;
+  }
+
+  .mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    border-top: 1px solid #dbdbdb;
+    padding: 15px;
+  }
+}
