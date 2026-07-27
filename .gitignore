@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+.env
+node_modules
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +25,5 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+instagram-clone/
+instagram-react-team/
