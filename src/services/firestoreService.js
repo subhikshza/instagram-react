@@ -74,3 +74,16 @@ export const followUser = async (followData) => {
 export const unfollowUser = async (followId) => {
   return await deleteDoc(doc(db, "followers", followId));
 };
+
+/* ================= LIKES ================= */
+
+export const likePost = async (likeData) => {
+  return await addDoc(collection(db, "likes"), {
+    ...likeData,
+    createdAt: serverTimestamp(),
+  });
+};
+
+export const unlikePost = async (likeId) => {
+  return await deleteDoc(doc(db, "likes", likeId));
+};
