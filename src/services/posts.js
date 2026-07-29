@@ -63,11 +63,17 @@ export async function getPost(postId) {
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
-/** All posts by one user, newest first (raw docs). */
+/**
+ * All posts by one user, newest first.
+ * Note: we filter by uid only and sort on the client, so this needs NO
+ * composite index (a uid + createdAt query would require one in production).
+ */
 export async function getPostsByUser(uid) {
-  const q = query(postsCol, where("uid", "==", uid), orderBy("createdAt", "desc"));
+  const q = query(postsCol, where("uid", "==", uid));
   const snap = await getDocs(q);
-  return snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  const rows = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
+  rows.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+  return rows;
 }
 
 /** Update a post's caption / location (only the author should be allowed — see rules). */
