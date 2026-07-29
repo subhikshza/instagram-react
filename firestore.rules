@@ -1,0 +1,90 @@
+rules_version = '2';
+
+// Firestore security rules for the Instagram clone.
+//
+// Model:
+//  - Anyone signed in can READ profiles, posts, comments, likes and the follow
+//    graph (it's a public social feed).
+//  - You can only WRITE your own data.
+//  - Denormalized counters (likesCount, commentsCount, followersCount,
+//    followingCount) are updated by *other* users during like/comment/follow,
+//    so those specific fields are writable by any signed-in user — but ONLY
+//    those fields, and nothing else on the document.
+//
+// This is a demo-grade ruleset: it protects ownership and prevents tampering
+// with post/profile content, while letting the social counters work without
+// Cloud Functions.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // true if the update touches ONLY the given counter fields
+    function onlyChanges(fields) {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(fields);
+    }
+
+    // ---------------- users ----------------
+    match /users/{uid} {
+      allow read: if signedIn();
+      allow create: if isOwner(uid);
+      // owner can edit anything on their own doc;
+      // anyone signed in may bump ONLY the follow counters (follow/unfollow).
+      allow update: if isOwner(uid)
+                    || (signedIn() && onlyChanges(['followersCount', 'followingCount']));
+      allow delete: if isOwner(uid);
+
+      // private per-user subcollections (only the owner can read/write)
+      match /likes/{postId} {
+        allow read, write: if isOwner(uid);
+      }
+      match /saved/{postId} {
+        allow read, write: if isOwner(uid);
+      }
+
+      // follow graph is public-read; each edge is written by the user it belongs to
+      match /following/{targetUid} {
+        allow read: if signedIn();
+        allow write: if isOwner(uid); // I control who *I* follow
+      }
+      match /followers/{followerUid} {
+        allow read: if signedIn();
+        allow write: if isOwner(followerUid); // the follower writes this mirror edge
+      }
+    }
+
+    // ---------------- posts ----------------
+    match /posts/{postId} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.uid == request.auth.uid;
+      // author may edit caption/location etc.;
+      // anyone signed in may bump ONLY the like/comment counters.
+      allow update: if isOwner(resource.data.uid)
+                    || (signedIn() && onlyChanges(['likesCount', 'commentsCount']));
+      allow delete: if isOwner(resource.data.uid);
+
+      // likes: doc id is the liker's uid; you can only create/delete your own like
+      match /likes/{likerUid} {
+        allow read: if signedIn();
+        allow create, delete: if isOwner(likerUid);
+      }
+
+      // comments: author writes their own; author OR post owner can delete
+      match /comments/{commentId} {
+        allow read: if signedIn();
+        allow create: if signedIn()
+                      && request.resource.data.uid == request.auth.uid;
+        allow delete: if signedIn()
+                      && (resource.data.uid == request.auth.uid
+                          || get(/databases/$(database)/documents/posts/$(postId)).data.uid == request.auth.uid);
+      }
+    }
+  }
+}

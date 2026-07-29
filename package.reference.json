@@ -1,0 +1,17 @@
+{
+  "name": "instagram-react-db",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Member 2 deliverable: Firestore schema, CRUD service layer, security rules, and DB tests for the Instagram clone.",
+  "scripts": {
+    "test:db": "firebase emulators:exec --only auth,firestore --project demo-instagram-clone \"node tests/crud.test.mjs\"",
+    "emulators": "firebase emulators:start --only auth,firestore,storage --project demo-instagram-clone"
+  },
+  "dependencies": {
+    "firebase": "^12.16.0"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "indexes": [
+    {
+      "//": "getPostsByUser(): where uid == X order by createdAt desc",
+      "collectionGroup": "posts",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "uid", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
