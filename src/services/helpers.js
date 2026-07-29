@@ -49,6 +49,7 @@ export function toFeedPost(postDoc, ctx = {}) {
     ctx;
   return {
     id: postDoc.id,
+    uid: postDoc.uid,
     username: postDoc.username,
     avatar: postDoc.avatar,
     location: postDoc.location || "",

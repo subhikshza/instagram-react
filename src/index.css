@@ -352,3 +352,482 @@ a {
   }
 }
 
+
+/* ==================================================================
+   Navigation sidebar + page layout  (added for routed navbar)
+   ================================================================== */
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.nav-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 245px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  padding: 8px 12px 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+}
+
+.nav-logo {
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 25px 12px 22px;
+}
+
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 16px;
+  color: var(--text);
+  background: transparent;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover {
+  background: #f2f2f2;
+}
+
+.nav-item.active {
+  font-weight: 700;
+}
+
+.nav-item svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.page-content {
+  flex: 1;
+  margin-left: 245px;
+  min-width: 0;
+}
+
+/* container for Explore / Profile pages */
+.main-layout {
+  max-width: 935px;
+  margin: 30px auto;
+  padding: 0 16px;
+}
+
+/* ---------- Explore / Profile post grid ---------- */
+.post-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+
+.grid-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.grid-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hover-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  color: #fff;
+  font-weight: 600;
+  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.grid-item:hover .hover-overlay {
+  opacity: 1;
+}
+
+/* ---------- Profile header ---------- */
+.profile-header {
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  padding: 20px 0 40px;
+}
+
+.avatar-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.username-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.edit-btn {
+  background: #efefef;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 40px;
+  font-size: 16px;
+}
+
+.bio-name {
+  font-size: 14px;
+}
+
+.bio-text {
+  font-size: 14px;
+}
+
+/* ---------- Profile tabs ---------- */
+.profile-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  border-top: 1px solid var(--border);
+}
+
+.tab-btn {
+  padding: 16px 0;
+  margin-top: -1px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--muted);
+  border-top: 1px solid transparent;
+}
+
+.tab-btn.active {
+  color: var(--text);
+  border-top: 1px solid var(--text);
+}
+
+.no-content {
+  text-align: center;
+  padding: 48px;
+  color: var(--muted);
+}
+
+/* ---------- Sidebar becomes a bottom bar on mobile ---------- */
+@media (max-width: 935px) {
+  .nav-sidebar {
+    top: auto;
+    width: 100%;
+    height: 52px;
+    flex-direction: row;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    padding: 0;
+  }
+
+  .nav-logo {
+    display: none;
+  }
+
+  .nav-links {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  .nav-item {
+    justify-content: center;
+    padding: 8px;
+    width: auto;
+  }
+
+  .nav-item span {
+    display: none; /* icons only on small screens */
+  }
+
+  .page-content {
+    margin-left: 0;
+    padding-bottom: 60px;
+  }
+}
+
+/* ==================================================================
+   Auth pages (Login / Signup)
+   ================================================================== */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  background: var(--background);
+}
+
+.auth-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 40px 40px 30px;
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.auth-logo {
+  font-family: "Segoe Script", "Brush Script MT", cursive;
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+.auth-subtitle {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.auth-form input {
+  border: 1px solid var(--border);
+  background: #fafafa;
+  border-radius: 4px;
+  padding: 10px 9px;
+  font-size: 13px;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: #a8a8a8;
+}
+
+.auth-btn {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.auth-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.auth-error {
+  color: var(--danger);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 4px;
+}
+
+.auth-switch {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.auth-switch a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.auth-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* push Log out to the bottom of the sidebar */
+.nav-logout {
+  margin-top: auto;
+}
+
+@media (max-width: 935px) {
+  .nav-logout {
+    margin-top: 0;
+  }
+}
+
+/* ==================================================================
+   Create-post page, feed states, post delete menu
+   ================================================================== */
+
+.feed-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.create-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.create-title {
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.create-form label {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.create-form input,
+.create-form textarea {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+}
+
+.create-form input:focus,
+.create-form textarea:focus {
+  border-color: #a8a8a8;
+}
+
+.create-preview {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 10px 0 4px;
+}
+
+/* delete menu on a post */
+.post__more-wrap {
+  margin-left: auto;
+  position: relative;
+}
+
+.post__menu {
+  position: absolute;
+  right: 0;
+  top: 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
+  overflow: hidden;
+  z-index: 20;
+}
+
+.post__menu-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--danger);
+  white-space: nowrap;
+  width: 100%;
+}
+
+.post__menu-item:hover {
+  background: #f9f9f9;
+}
+
+/* upload dropzone on the create page */
+.create-dropzone {
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 16px;
+  font-size: 14px;
+  overflow: hidden;
+}
+
+.create-dropzone:hover {
+  border-color: #a8a8a8;
+}
+
+.create-dropzone .create-preview {
+  margin: 0;
+}
